@@ -1,0 +1,118 @@
+#include <stdio.h>
+#define size 5
+int ct[size];
+int process[size];
+int tat[size];
+int wt[size];
+
+void selection_sort(int btt[],int att[]){
+
+    for(int i=0; i<size-1; i++){
+        int min = i;
+        for(int j=i+1; j<size; j++){
+            if(btt[j]<btt[min]){
+                min = j;
+            }
+        }
+
+        int temp = btt[i];
+        btt[i] = btt[min];
+        btt[min] = temp;
+
+        int temp_at = att[i];
+        att[i] = att[min];
+        att[min] = temp_at;
+
+        int temp_process = process[i];
+        process[i] = process[min];
+        process[min] = temp_process;
+    }
+
+}
+void completion_time(int btt[],int att[]){
+    int count = att[0];
+    for(int i=0; i<size; i++){
+        count = count + btt[i];
+        ct[i] = count;
+    }
+
+
+}
+
+void turn_around_time(){
+    for(int i=0; i<size; i++){
+        tat[i] = ct[i]-0;
+    }
+
+}
+void waiting_time(int btt[]){
+    for(int i=0; i<size; i++){
+        wt[i] = tat[i] - btt[i];
+    }
+
+}
+
+void average_waiting_time(){
+    int twt = 0;
+    for(int i=0; i<size; i++){
+        twt = twt + wt[i];
+    }
+    float avg_wt = (float)twt/size;
+    printf("The Average Waiting Time: ");
+    printf("%f ", avg_wt);
+    printf("\n");
+
+}
+
+void average_turn_around_time(){
+    int atat = 0;
+    for(int i=0; i<size; i++){
+        atat = atat + tat[i];
+    }
+    float avg_atat = (float)atat/size;
+    printf("The Average Turn Around Time: ");
+    printf("%f ", avg_atat);
+    printf("\n");
+
+}
+
+void print_results() {
+    printf("\nP\tCT\tTAT\tWT");
+    for (int i = 0; i < size; i++) {
+
+        printf("\nP%d\t%d\t\%d\t\%d", i + 1, ct[i], tat[i], wt[i]);
+
+        }
+        printf("\n");
+    }
+
+
+int main() {
+    int bt[size];
+    int at[size];
+
+
+    printf("Enter arrival times for %d processes:\n", size);
+    for (int i = 0; i < size; i++) {
+        printf("Arrival time for process %d: ", i + 1);
+        scanf("%d", &at[i]);
+        process[i] = i;
+    }
+
+    printf("Enter burst times for %d processes:\n", size);
+    for (int i = 0; i < size; i++) {
+        printf("Burst time for process %d: ", i + 1);
+        scanf("%d", &bt[i]);
+    }
+
+    selection_sort(bt,at);
+    completion_time(bt,at);
+    turn_around_time();
+    waiting_time(bt);
+    print_results();
+    average_waiting_time();
+    average_turn_around_time();
+
+
+    return 0;
+}
