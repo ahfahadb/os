@@ -92,14 +92,13 @@ int main() {
     int at[size];
 
 
-    printf("Enter arrival times for %d processes:\n", size);
+    printf("Enter The Arrival Time and Burst Times for %d processes:\n", size);
     for (int i = 0; i < size; i++) {
         printf("Arrival time for process %d: ", i + 1);
         scanf("%d", &at[i]);
         process[i] = i;
     }
 
-    printf("Enter burst times for %d processes:\n", size);
     for (int i = 0; i < size; i++) {
         printf("Burst time for process %d: ", i + 1);
         scanf("%d", &bt[i]);
