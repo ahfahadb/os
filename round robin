@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <math.h>
+
+#define size 4
+struct op_sys {
+    int BT[size];
+    int BTT[size];
+    int CT[size];
+    int TAT[size];
+    int WT[size];
+    int t_q;
+};
+
+int main() {
+
+    struct op_sys abc;
+    printf("Enter The Time Quantum: ");
+    scanf("%d", &abc.t_q);
+    printf("Enter The Burst Time: ");
+    for(int i=0; i<size; i++)
+    {
+        scanf("%d",&abc.BT[i]);
+        abc.BTT[i] = abc.BT[i];
+    }
+
+    float max = abc.BT[0];
+    for(int i=1; i<size; i++)
+    {
+        if(max < abc.BT[i]){
+            max = abc.BT[i];
+        }
+    }
+    int iteration = ceil(max / abc.t_q);
+    printf(" %d\n",iteration);
+    int maxx = 0;
+    for(int i =0; i<iteration;i++)
+    {
+        for(int j=0;j<size;j++)
+        {
+            if(abc.BTT[j] > abc.t_q)
+            {
+                abc.BTT[j] = abc.BTT[j] - abc.t_q;
+                maxx = maxx + abc.t_q;
+                abc.CT[j] = maxx;
+            }
+            else
+            {
+                maxx = maxx + abc.BTT[j];
+                if (abc.BTT[j] != 0)
+                {
+                    abc.CT[j] = maxx;
+                }
+                abc.BTT[j] = 0;
+
+            }
+
+        }
+       printf("iteration %d :" ,i+1);
+
+         for(int i=0;i<size;i++)
+    {
+        printf("%d ",abc.CT[i]);
+    }
+    printf("\n");
+
+
+
+    }
+    printf("The Completion Time: ");
+    for(int i=0;i<size;i++)
+    {
+        printf("%d ",abc.CT[i]);
+    }
+    printf("\n");
+    printf("The Turn Around Time:");
+    for(int i=0;i<size;i++){
+        abc.TAT[i] = abc.CT[i] - 0;
+    }
+    for(int i=0; i<size; i++){
+        printf("%d ", abc.TAT[i]);
+    }
+    printf("\n");
+    printf("The Waiting Time: ");
+    for(int i=0;i<size;i++){
+        abc.WT[i] = abc.TAT[i] - abc.BT[i];
+    }
+    for(int i=0; i<size; i++){
+        printf("%d ", abc.WT[i]);
+    }
+    printf("\n");
+    printf("Average Waiting Time: ");
+    int total_wt = 0;
+    for (int i = 0; i < size; i++)
+    {
+       total_wt = total_wt + abc.WT[i];
+    }
+    float avg_wt = (float)total_wt / size;
+    printf("%f", avg_wt);
+    printf("\n");
+    printf("Average Turn Around Time: ");
+    int atat=0;
+    for(int i=0; i<size; i++){
+        atat = atat+abc.TAT[i];
+    }
+    float avg_atat = (float)atat/size;
+    printf("%f\n",avg_atat);
+
+
+
+
+
+    return 0;
+}
