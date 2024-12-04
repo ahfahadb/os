@@ -1,0 +1,63 @@
+#include <stdio.h>
+#define size 5
+int ct[size];
+int tat[size];
+int wt[size];
+
+
+void completion_time(int btt[]){
+    int count = 0;
+    for(int i=0;i<size;i++){
+        count = count + btt[i];
+        ct[i] = count;
+    }
+
+}
+
+
+void turn_around_time(){
+    for(int i=0;i<size;i++){
+        tat[i] = ct[i] - 0;
+    }
+}
+
+void waiting_time(int btt[]){
+    for(int i=0;i<size; i++){
+        wt[i] = tat[i] - btt[i];
+    }
+}
+void a_wt(){
+    int total_wt = 0;
+    for(int i=0;i<size;i++){
+        total_wt = total_wt + wt[i];
+    }
+    float avg_wt = (float)total_wt/size;
+    printf("\n");
+    printf("The Average Waiting Time: ");
+    printf("%f ", avg_wt);
+    printf("\n");
+}
+void print_results(){
+    printf("\nP\tCT\tTAT\tWt");
+    for(int i=0;i<size;i++){
+        printf("\n%d\t%d\t%d\t%d", i+1,ct[i],tat[i],wt[i]);
+    }
+}
+
+int main(){
+    int bt[size];
+
+    printf("Enter the Burst Time: ");
+    for(int i=0;i<size;i++){
+        scanf("%d", &bt[i]);
+    }
+
+    completion_time(bt);
+    turn_around_time();
+    waiting_time(bt);
+    print_results();
+    a_wt();
+
+    return 0;
+
+}
